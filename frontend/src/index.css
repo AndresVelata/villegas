@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/* Definimos aquí las clases personalizadas para tus colores */
+@layer utilities {
+  .bg-primary { background-color: #21295c; }
+  .text-primary { color: #21295c; }
+
+  .bg-secondary { background-color: #1b3b6f; }
+  .text-secondary { color: #1b3b6f; }
+
+  .bg-accent { background-color: #065a82; }
+  .text-accent { color: #065a82; }
+
+  .bg-info { background-color: #1c7293; }
+  .text-info { color: #1c7293; }
+
+  .bg-muted { background-color: #9eb3c2; }
+  .text-muted { color: #9eb3c2; }
+}
