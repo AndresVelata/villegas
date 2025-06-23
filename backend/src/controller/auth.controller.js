@@ -31,7 +31,7 @@ exports.registrarUsuario = async (req, res, next) => {
 
     // Insertar usuario con clave temporal
     await pool.query(
-      `INSERT INTO usuarios (nombre, apellido, email, telefono, cedula, password_temporal, rol_id)
+      `INSERT INTO usuarios (nombre, apellido, email, telefono, cedula, password, rol_id)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [nombre, apellido, email, telefono, cedula, hashTemporal, 2]
     );
@@ -69,7 +69,7 @@ exports.loginUsuario = async (req, res, next) => {
     const usuario = rows[0];
     
     // Comparar con password hash
-    const isMatch = await bcrypt.compare(password, usuario.password || usuario.password_temporal);
+    const isMatch = await bcrypt.compare(password, usuario.password);
     if (!isMatch) {
         throw new Error("Credenciales incorrectas");
     }
@@ -86,14 +86,7 @@ exports.loginUsuario = async (req, res, next) => {
 
     res.json({
       mensaje: "Inicio de sesión exitoso",
-      token,
-      usuario: {
-        id: usuario.id,
-        nombre: usuario.nombre,
-        apellido: usuario.apellido,
-        email: usuario.email,
-        rol: usuario.rol_id,
-      },
+      accessToken: token,
     });
   } catch (err) {
     next(err);
@@ -123,7 +116,7 @@ exports.olvidePassword = async (req, res, next) => {
     const tempPassword = uuidv4().slice(0, 8); 
     const hash = await bcrypt.hash(tempPassword, 10);
 
-    await pool.query("UPDATE usuarios SET password = ? WHERE id = ?", [
+    await pool.query("UPDATE usuarios SET password = ?, password_temporal = 0 WHERE id = ?", [
       hash,
       id,
     ]);

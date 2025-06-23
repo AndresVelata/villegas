@@ -9,7 +9,11 @@ router.post("/login", authcontroller.loginUsuario);
 router.get("/verify", authMiddleware, (req, res) => {
   res.json({
     mensaje: "Token válido",
-    usuario: req.usuario,
+    usuario: {
+      id: req.usuario.id,
+      nombre: req.usuario.nombre,
+      rol: req.usuario.rol,
+    }
   });
 });
 

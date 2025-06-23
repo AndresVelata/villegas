@@ -8,7 +8,7 @@ exports.obtenerPerfil = async (req, res, next) => {
     const { id } = req.usuario;
 
     const [rows] = await pool.query(
-      "SELECT id, nombre, apellido, email, telefono, cedula, rol_id FROM usuarios WHERE id = ?",
+      "SELECT id, nombre, apellido, email, telefono, cedula, password_temporal, rol_id FROM usuarios WHERE id = ?",
       [id]
     );
 
@@ -22,27 +22,6 @@ exports.obtenerPerfil = async (req, res, next) => {
   }
 };
 
-
-exports.actualizarPerfil = async (req, res, next) => {
-  try {
-    const { id } = req.usuario;
-    const { nombre, apellido, telefono } = req.body;
-
-    // Validaciones básicas
-    if (!nombre || !apellido) {
-      return res.status(400).json({ error: "Nombre y apellido son obligatorios" });
-    }
-
-    await pool.query(
-      "UPDATE usuarios SET nombre = ?, apellido = ?, telefono = ? WHERE id = ?",
-      [nombre.trim(), apellido.trim(), telefono?.trim() || null, id]
-    );
-
-    res.json({ mensaje: "Perfil actualizado exitosamente ✅" });
-  } catch (err) {
-    next(err);
-  }
-};
 
 exports.actualizarCampoPerfil = async (req, res, next) => {
   try {
@@ -103,7 +82,7 @@ exports.cambiarPassword = async (req, res, next) => {
     }
 
     const hashNuevo = await bcrypt.hash(nueva, 10);
-    await pool.query("UPDATE usuarios SET password = ? WHERE id = ?", [hashNuevo, id]);
+    await pool.query("UPDATE usuarios SET password = ?, password_temporal = 1 WHERE id = ?", [hashNuevo, id]);
 
     res.json({ mensaje: "Contraseña actualizada exitosamente ✅" });
   } catch (err) {
