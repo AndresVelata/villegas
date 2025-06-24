@@ -1,29 +1,18 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth"; 
-import Sidebar from "../components/Sidebar";
-import Inicio from "./Inicio"; 
+import { useAuth } from "../hooks/useAuth";
+import LayoutPrivado from "../layouts/LayoutPrivado";
 
 const Home = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [vista, setVista] = useState("inicio");
-
   const { usuario } = useAuth();
 
   if (!usuario) return <p className="text-center">Cargando...</p>;
 
   return (
-    <div className="flex min-h-screen bg-gray-300">
-      <Sidebar
-        usuario={usuario}
-        collapsed={collapsed}
-        setCollapsed={setCollapsed}
-        vista={vista}
-        setVista={setVista}
-      />
-      <div className={`flex-1 p-10 transition-all duration-300 ${collapsed ? "ml-20" : "ml-64"}`}>
-        {vista === "inicio" && <Inicio usuario={usuario} />}
+    <LayoutPrivado usuario={usuario}>
+      <div className="flex flex-col w-full h-full justify-center items-center">
+        <h1 className="text-3xl font-bold mb-4">Hola, {usuario.nombre}</h1>
+        <p>Bienvenido al sistema Villegas</p>
       </div>
-    </div>
+    </LayoutPrivado>
   );
 };
 

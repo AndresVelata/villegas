@@ -7,10 +7,12 @@ import {
   Settings,
   UserPlus,
   Home,
+  Users
 } from "lucide-react";
 import { toast } from "react-toastify";
 
 const Sidebar = ({ usuario, collapsed, setCollapsed }) => {
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,7 +30,9 @@ const Sidebar = ({ usuario, collapsed, setCollapsed }) => {
       <button
         onClick={() => navigate(to)}
         className={`flex items-center gap-3 w-full text-left px-4 py-2  cursor-pointer rounded transition ${
-          isActive ? "bg-blue-600 text-white font-semibold " : "hover:bg-cyan-600 "
+          isActive
+            ? "bg-blue-600 text-white font-semibold "
+            : "hover:bg-cyan-600 "
         }`}
       >
         <Icon size={20} />
@@ -47,7 +51,9 @@ const Sidebar = ({ usuario, collapsed, setCollapsed }) => {
       <div>
         <div className="flex items-center justify-between mb-6">
           {!collapsed && (
-            <h2 className="text-lg font-bold whitespace-nowrap">Sistema Villegas</h2>
+            <h2 className="text-lg font-bold whitespace-nowrap">
+              Sistema Villegas
+            </h2>
           )}
           <button
             onClick={() => setCollapsed(!collapsed)}
@@ -62,10 +68,14 @@ const Sidebar = ({ usuario, collapsed, setCollapsed }) => {
           <SidebarButton icon={Home} label="Inicio" to="/home" />
           <SidebarButton icon={User} label="Perfil" to="/perfil" />
 
+   
           {usuario.rol === 1 && (
-            <SidebarButton icon={UserPlus} label="Registrar" to="/registrar" />
+            <SidebarButton
+              icon={Users}
+              label="Usuarios"
+               to="/usuarios"
+            />
           )}
-
         </div>
       </div>
 

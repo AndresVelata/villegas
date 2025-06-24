@@ -8,7 +8,8 @@ exports.obtenerPerfil = async (req, res, next) => {
     const { id } = req.usuario;
 
     const [rows] = await pool.query(
-      "SELECT id, nombre, apellido, email, telefono, cedula, password_temporal, rol_id FROM usuarios WHERE id = ?",
+      `SELECT id, nombre, apellido, email, telefono, cedula, password_temporal, rol_id AS rol
+       FROM usuarios WHERE id = ?`,
       [id]
     );
 
@@ -21,6 +22,7 @@ exports.obtenerPerfil = async (req, res, next) => {
     next(err);
   }
 };
+
 
 
 exports.actualizarCampoPerfil = async (req, res, next) => {
@@ -82,7 +84,7 @@ exports.cambiarPassword = async (req, res, next) => {
     }
 
     const hashNuevo = await bcrypt.hash(nueva, 10);
-    await pool.query("UPDATE usuarios SET password = ?, password_temporal = 1 WHERE id = ?", [hashNuevo, id]);
+    await pool.query("UPDATE usuarios SET password = ?, password_temporal = 0 WHERE id = ?", [hashNuevo, id]);
 
     res.json({ mensaje: "Contraseña actualizada exitosamente ✅" });
   } catch (err) {
@@ -125,6 +127,56 @@ exports.resetearPassword = async (req, res, next) => {
       email,
       claveTemporal: tempPassword,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+exports.listarUsuarios = async (req, res, next) => {
+  
+  try {
+    const [rows] = await pool.query(
+      "SELECT id, nombre, apellido, email, telefono, cedula, rol_id FROM usuarios"
+    );
+    res.json({ usuarios: rows });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.cambiarRol = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { rol } = req.body;
+
+    if (![1, 2].includes(rol)) {
+      return res.status(400).json({ error: "Rol inválido" });
+    }
+
+    await pool.query("UPDATE usuarios SET rol_id = ? WHERE id = ?", [rol, id]);
+    res.json({ mensaje: "Rol actualizado correctamente ✅" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.cambiarEstado = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { activo } = req.body; // true o false
+    await pool.query("UPDATE usuarios SET activo = ? WHERE id = ?", [activo ? 1 : 0, id]);
+    res.json({ mensaje: `Usuario ${activo ? "activado" : "desactivado"} correctamente ✅` });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.eliminarUsuario = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await pool.query("DELETE FROM usuarios WHERE id = ?", [id]);
+    res.json({ mensaje: "Usuario eliminado correctamente ✅" });
   } catch (err) {
     next(err);
   }

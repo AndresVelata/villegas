@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import LayoutPrivado from "../layouts/LayoutPrivado";
+import { useAuth } from "../hooks/useAuth";
 
 const Perfil = () => {
-  const [perfil, setPerfil] = useState(null);
+  const { usuario, setUsuario } = useAuth();
+  const [loading, setLoading] = useState(true);
   const [editando, setEditando] = useState(null);
   const [valor, setValor] = useState("");
   const [passwords, setPasswords] = useState({ actual: "", nueva: "", repetir: "" });
@@ -19,15 +21,17 @@ const Perfil = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setPerfil(data.perfil);
+        setUsuario(data.perfil);
         localStorage.setItem("usuario", JSON.stringify(data.perfil));
       } catch (err) {
         toast.error("No se pudo cargar el perfil");
+      } finally {
+        setLoading(false);
       }
     };
 
     obtenerPerfil();
-  }, []);
+  }, [setUsuario]);
 
   const handleEditar = (campo, valorActual) => {
     setEditando(campo);
@@ -43,9 +47,9 @@ const Perfil = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success(data.mensaje);
-      const nuevoPerfil = { ...perfil, [editando]: valor };
+      const nuevoPerfil = { ...usuario, [editando]: valor };
       setEditando(null);
-      setPerfil(nuevoPerfil);
+      setUsuario(nuevoPerfil);
       localStorage.setItem("usuario", JSON.stringify(nuevoPerfil));
     } catch (err) {
       toast.error(err.response?.data?.error || "Error al actualizar");
@@ -67,14 +71,11 @@ const Perfil = () => {
     }
   };
 
-  if (!perfil) return <p className="text-center ">Cargando perfil...</p>;
+  if (loading || !usuario) return <p className="text-center">Cargando perfil...</p>;
 
   const campoEditable = (campo, label) => (
     <div className="flex">
-        <div className=" w-18">
-
-      <span className="font-semibold text-primary ">{label}:</span>{" "}
-        </div>
+      <div className="w-18 font-semibold text-primary">{label}:</div>
       {editando === campo ? (
         <>
           <input
@@ -83,28 +84,13 @@ const Perfil = () => {
             value={valor}
             onChange={(e) => setValor(e.target.value)}
           />
-          <button
-            className="ml-2 text-info font-semibold"
-            onClick={handleActualizar}
-          >
-            Guardar
-          </button>
-          <button
-            className="ml-2 "
-            onClick={() => setEditando(null)}
-          >
-            Cancelar
-          </button>
+          <button className="ml-2 text-info font-semibold" onClick={handleActualizar}>Guardar</button>
+          <button className="ml-2" onClick={() => setEditando(null)}>Cancelar</button>
         </>
       ) : (
         <span className="ml-2 flex">
-            <div className="w-64">
-          {perfil[campo]} {" "}
-            </div>
-          <button
-            onClick={() => handleEditar(campo, perfil[campo])}
-            className="ml-2 text-info hover:underline"
-          >
+          <div className="w-64">{usuario[campo]}</div>
+          <button onClick={() => handleEditar(campo, usuario[campo])} className="ml-2 text-info hover:underline">
             Editar
           </button>
         </span>
@@ -113,21 +99,22 @@ const Perfil = () => {
   );
 
   return (
-    <LayoutPrivado usuario={perfil}>
+    <LayoutPrivado usuario={usuario}>
       <div className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8 border border-muted">
         <h2 className="text-2xl font-bold text-secondary mb-6">Mi Perfil</h2>
-        {perfil.password_temporal===0 && (
+
+        {usuario.password_temporal === 1 && (
           <div className="mb-4 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded p-4">
             <strong>⚠️ ¡Atención!</strong> Estás usando una contraseña temporal. Por seguridad, cambia tu contraseña ahora.
           </div>
         )}
+
         <div className="space-y-4 text-gray-700">
           {campoEditable("nombre", "Nombre")}
           {campoEditable("apellido", "Apellido")}
           {campoEditable("telefono", "Teléfono")}
-          <p className="flex"><div className="w-20"><span className="font-semibold text-primary ">Email:</span></div> {perfil.email}</p>
-          <p className="flex"><div className="w-20"><span className="font-semibold text-primary">Cédula:</span></div> {perfil.cedula}</p>
-          {/* <p><span className="font-semibold text-primary">Rol:</span> {perfil.rol_id === 1 ? "Administrador" : "Usuario"}</p> */}
+          <p className="flex"><div className="w-20 font-semibold text-primary">Email:</div> {usuario.email}</p>
+          <p className="flex"><div className="w-20 font-semibold text-primary">Cédula:</div> {usuario.cedula}</p>
         </div>
 
         <hr className="my-6 border-muted" />
@@ -168,5 +155,3 @@ const Perfil = () => {
 };
 
 export default Perfil;
-
-

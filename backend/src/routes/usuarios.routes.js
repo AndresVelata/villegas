@@ -12,4 +12,12 @@ router.put("/cambiar-password", authMiddleware, usuarioscontroller.cambiarPasswo
 
 router.put("/:id/reset-password", authMiddleware, soloAdmin, usuarioscontroller.resetearPassword);
 
+
+// rutas/usuarios.js
+router.get("/lista", authMiddleware, soloAdmin, usuarioscontroller.listarUsuarios);
+router.put("/rol/:id", authMiddleware, soloAdmin, usuarioscontroller.cambiarRol);
+router.put("/estado/:id", authMiddleware, soloAdmin, usuarioscontroller.cambiarEstado);
+router.delete("/:id", authMiddleware, soloAdmin, usuarioscontroller.eliminarUsuario);
+
+
 module.exports = router;

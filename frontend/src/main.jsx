@@ -4,9 +4,9 @@ import AppRouter from "./router/AppRouter.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
-
+import { AuthProvider } from "./context/AuthContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <>
+  <AuthProvider>
     <AppRouter />
     <ToastContainer
       position="top-right"
@@ -19,5 +19,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       pauseOnHover
       theme="colored"
     />
-  </>
+  </AuthProvider>
 );
