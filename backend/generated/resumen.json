@@ -1,0 +1,23 @@
+{
+  "mayor_interaccion": {
+    "post_id": "100968166227091_608306928823397",
+    "total_interaccion": 8,
+    "emocion_predominante": "neutral",
+    "positivas": 0,
+    "negativas": 0
+  },
+  "mejor_aceptacion": {
+    "post_id": "100968166227091_129576876696407",
+    "total_interaccion": 5,
+    "emocion_predominante": "neutral",
+    "positivas": 1,
+    "negativas": 0
+  },
+  "peor_aceptacion": {
+    "post_id": "100968166227091_102578306062931",
+    "total_interaccion": 4,
+    "emocion_predominante": "anger",
+    "positivas": 1,
+    "negativas": 1
+  }
+}

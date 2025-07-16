@@ -6,6 +6,7 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/auth.routes");
 const usuariosRoutes = require("./routes/usuarios.routes");
+const analyticsRoutes = require("./routes/analytics.routes");
 
 const errorHandler = require("./middleware/errorHandler");
 
@@ -25,6 +26,7 @@ app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes); 
 app.use("/api/usuarios", usuariosRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 // Manejador de errores al final
 app.use(errorHandler);

@@ -1,0 +1,83 @@
+{
+  "100968166227091_608306928823397": {
+    "comentarios": 4,
+    "emociones": {
+      "neutral": 4
+    },
+    "reacciones": {
+      "total_count": 4,
+      "viewer_reaction": "SAD"
+    }
+  },
+  "100968166227091_608301138823976": {
+    "comentarios": 5,
+    "emociones": {
+      "neutral": 5
+    },
+    "reacciones": {
+      "total_count": 3,
+      "viewer_reaction": "ANGRY"
+    }
+  },
+  "100968166227091_129576876696407": {
+    "comentarios": 3,
+    "emociones": {
+      "surprise": 1,
+      "neutral": 2
+    },
+    "reacciones": {
+      "total_count": 2,
+      "viewer_reaction": "LIKE"
+    }
+  },
+  "100968166227091_119322691055159": {
+    "comentarios": 1,
+    "emociones": {
+      "joy": 1
+    },
+    "reacciones": {
+      "total_count": 1,
+      "viewer_reaction": "NONE"
+    }
+  },
+  "100968166227091_119317024389059": {
+    "comentarios": 0,
+    "emociones": {},
+    "reacciones": {
+      "total_count": 1,
+      "viewer_reaction": "NONE"
+    }
+  },
+  "100968166227091_119309031056525": {
+    "comentarios": 1,
+    "emociones": {
+      "neutral": 1
+    },
+    "reacciones": {
+      "total_count": 1,
+      "viewer_reaction": "NONE"
+    }
+  },
+  "100968166227091_119287127725382": {
+    "comentarios": 3,
+    "emociones": {
+      "neutral": 2,
+      "joy": 1
+    },
+    "reacciones": {
+      "total_count": 0,
+      "viewer_reaction": "NONE"
+    }
+  },
+  "100968166227091_102578306062931": {
+    "comentarios": 2,
+    "emociones": {
+      "anger": 1,
+      "joy": 1
+    },
+    "reacciones": {
+      "total_count": 2,
+      "viewer_reaction": "HAHA"
+    }
+  }
+}
