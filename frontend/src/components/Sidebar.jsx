@@ -52,7 +52,7 @@ const Sidebar = ({ usuario, collapsed, setCollapsed }) => {
         <div className="flex items-center justify-between mb-6">
           {!collapsed && (
             <h2 className="text-lg font-bold whitespace-nowrap">
-              Sistema Villegas
+              Social Network Analysis
             </h2>
           )}
           <button

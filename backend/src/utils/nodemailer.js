@@ -13,13 +13,13 @@ const transporter = nodemailer.createTransport({
 exports.sendConfirmationEmail = async ({ nombre, email, claveTemporal }) => {
   try {
     await transporter.sendMail({
-      from: `"Sistema Villegas" <${process.env.EMAIL_USER}>`,
+      from: `"Social Network Analysis" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "🔐 Bienvenido - Acceso al Sistema",
       html: `
   <div style="font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; padding: 30px;">
     <div style="max-width: 600px; margin: auto; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-      <h2 style="color: #2c3e50; text-align: center;">¡Bienvenido al Sistema Villegas!</h2>
+      <h2 style="color: #2c3e50; text-align: center;">¡Bienvenido al Social Network Analysis!</h2>
       
       <p style="font-size: 16px; color: #333;">Hola <strong>${nombre}</strong>,</p>
       
@@ -42,7 +42,7 @@ exports.sendConfirmationEmail = async ({ nombre, email, claveTemporal }) => {
       </p>
 
       <p style="text-align: right; font-size: 14px; color: #555;">
-        — El equipo de <strong>Sistema Villegas</strong>
+        — El equipo de <strong>Social Network Analysis</strong>
       </p>
     </div>
   </div>
@@ -59,7 +59,7 @@ exports.sendConfirmationEmail = async ({ nombre, email, claveTemporal }) => {
 exports.sendResetPasswordEmail = async ({ nombre, email, claveTemporal }) => {
   try {
     await transporter.sendMail({
-      from: `"Sistema Villegas" <${process.env.EMAIL_USER}>`,
+      from: `"Social Network Analysis" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "🔄 Tu contraseña ha sido restablecida",
       html: `
@@ -88,7 +88,7 @@ exports.sendResetPasswordEmail = async ({ nombre, email, claveTemporal }) => {
       </p>
 
       <p style="text-align: right; font-size: 14px; color: #555;">
-        — El equipo de <strong>Sistema Villegas</strong>
+        — El equipo de <strong>Social Network Analysis</strong>
       </p>
     </div>
   </div>
